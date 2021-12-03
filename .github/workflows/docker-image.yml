@@ -14,7 +14,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Go into Backend folder to run local Dockerfile
-      run: cd Backend
     - name: Build the Docker image
+      working-directory: ./Backend
       run: docker build . --file Dockerfile --tag clip-api:$(date +%s)
