@@ -63,12 +63,14 @@ namespace Backend.Controllers
             }
             else
             {
-                dynamic req = await _dataService.GetAccessRefreshToken(refresh_code, redirecturi);
-                if (Utils.CheckProperty(req, "data"))
+                Token req = await _dataService.GetAccessRefreshToken(refresh_code, redirecturi);
+                if (req.AccessToken != null)
                 {
                     return Ok(new
                     {
-                        req.data
+                        access_token = req.AccessToken,
+                        expires_in = req.ExpiresIn,
+                        refresh_token = req.RefreshToken
                     });
                 }
                 else

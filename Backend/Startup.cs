@@ -44,7 +44,7 @@ namespace Backend
             services.AddSingleton<DiscordService>();
             services.AddScoped<AuthenticationMiddleware>();
             services.AddDbContextFactory<VideosContext>(options => {
-                options.UseMySql(Configuration["Databases:StandardString"], ServerVersion.Parse("10.4.20-mariadb"));
+                options.UseMySql(Configuration["Databases:StandardString"], ServerVersion.Parse("10.4.20-mariadb"), providerOptions => providerOptions.EnableRetryOnFailure());
             });
             services.AddScoped(p => p.GetRequiredService<IDbContextFactory<VideosContext>>().CreateDbContext());
             services.AddScoped<GoogleService>();
