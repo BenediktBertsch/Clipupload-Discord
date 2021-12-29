@@ -69,9 +69,10 @@ namespace Backend.Controllers
                 {
                     ContentType = "text/html",
                     Content = "<head>" +
-                                "<link rel = \"stylesheet\" href = \"https://cdn.plyr.io/3.6.3/plyr.css\" /> " +
+                                "<meta http-equiv=\"content - type\" content=\"text / html; charset = utf - 8\" />" + 
+                                "<link rel = \"stylesheet\" href = \"https://cdn.plyr.io/3.6.3/plyr.css\" />" +
                                 "<link href = \"https://fonts.googleapis.com/css2?family=Roboto&amp;display=swap\" rel = \"stylesheet\" />" +
-                                "<script src=\"https://cdn.plyr.io/3.6.3/plyr.js\" type=\"text/javascript\"></script> " +
+                                "<script src=\"https://cdn.plyr.io/3.6.3/plyr.js\" type=\"text/javascript\"></script>" +
                                 "<script> " +
                                     "document.addEventListener(" +
                                     "'DOMContentLoaded', () => {" +

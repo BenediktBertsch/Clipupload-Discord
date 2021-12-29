@@ -100,6 +100,10 @@ export default {
           );
           localStorage.setItem("refreshToken", data.refresh_token);
           this.refreshTokenReady = true;
+          this.loginStatus = true;
+        })
+        .catch(() => {
+          this.setLogout();
         });
     },
     async getLogin() {
@@ -118,7 +122,7 @@ export default {
           this.snackBarLoginText = "Successfully logged in.";
           this.$router.push("/");
         })
-        .catch((err) => {
+        .catch(() => {
           this.snackBarLogin = true;
           this.snackBarLoginText = "Error logging in, please try again.";
         });

@@ -52,9 +52,9 @@ namespace Backend.Controllers
         // Refresh authentication token if expired
         [HttpPost]
         [Route("/refresh")]
-        public async Task<IActionResult> Refresh([FromQuery] string refresh_code, [FromQuery]string? redirecturi)
+        public async Task<IActionResult> Refresh([FromQuery] string refresh_token, [FromQuery]string? redirecturi)
         {
-            if (refresh_code == null)
+            if (refresh_token == null)
             {
                 return BadRequest(new
                 {
@@ -63,7 +63,7 @@ namespace Backend.Controllers
             }
             else
             {
-                Token req = await _dataService.GetAccessRefreshToken(refresh_code, redirecturi);
+                Token req = await _dataService.GetAccessRefreshToken(refresh_token, redirecturi);
                 if (req.AccessToken != null)
                 {
                     return Ok(new
