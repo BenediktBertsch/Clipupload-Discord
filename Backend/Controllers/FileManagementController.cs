@@ -93,10 +93,10 @@ namespace Backend.Controllers
                             "<body style = \"display: flex; justify-content: center; align-items: center; margin: unset; background: black;\" >" +
                                 "<div class=\"plyr__video -wrapper\">" +
                                     "<video " +
-                                        "id=\"player\"" +
+                                        "id=\"player\" " +
+                                        "style=\"height: 100vh !important\"" +
                                         "src =\"https://www.googleapis.com/drive/v3/files/" + video.Videoid + "?key=" + _googleSettings.ApiKey + "&alt=media\" />" +
                                         "Your browser does not support video" +
-                                        "style=\"height: 100vh !important\"" +
                                     "</video>" +
                                     "<div class=\"plyr__poster\" hidden =\"\" />" +
                                 "</div>" +
