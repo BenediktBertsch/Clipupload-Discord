@@ -32,6 +32,6 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         context: ./Backend
-        file: ./Dockerfile
+        file: ./Backend/Dockerfile
         push: true
         tags: clip-api:latest
