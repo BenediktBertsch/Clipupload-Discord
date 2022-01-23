@@ -14,6 +14,28 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    - name: Upload to registry
+      uses: docker/login-action@v1.12.0
+      with:
+        # Server address of Docker registry. If not set then will default to Docker Hub
+        registry: ${{ env.registry }}
+        # Username used to log against the Docker registry
+        username: ${{ secrets.username }}
+        # Password or personal access token used to log against the Docker registry
+        password: ${{ secrets.password }}
+        # Specifies whether the given registry is ECR (auto, true or false)
+        ecr: auto
+        # Log out from the Docker registry at the end of a job
+        logout: true
+        
     - name: Build the Docker image
       working-directory: ./Backend
-      run: docker build . --file Dockerfile --tag clip-api:$(date +%s)
+      run: docker build . --file Dockerfile --tag clip-api:latest
+      
+    - name: Build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: clip-api:latest
