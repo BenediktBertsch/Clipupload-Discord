@@ -96,7 +96,7 @@ namespace Backend.Controllers
                                         "id=\"player\"" +
                                         "src =\"https://www.googleapis.com/drive/v3/files/" + video.Videoid + "?key=" + _googleSettings.ApiKey + "&alt=media\" />" +
                                         "Your browser does not support video" +
-                                        "style=\"height: 100vh !important\""
+                                        "style=\"height: 100vh !important\"" +
                                     "</video>" +
                                     "<div class=\"plyr__poster\" hidden =\"\" />" +
                                 "</div>" +
