@@ -8,9 +8,6 @@ on:
 
 jobs:
   build:
-  
-    env:
-      REGISTRY: https://registry.xavii.us/
       
     runs-on: ubuntu-latest
 
@@ -19,7 +16,7 @@ jobs:
       uses: docker/login-action@v1.12.0
       with:
         # Server address of Docker registry. If not set then will default to Docker Hub
-        registry: ${{ env.REGISTRY }}
+        registry: https://${{ secrets.REGISTRY }}
         # Username used to log against the Docker registry
         username: ${{ secrets.USERNAME }}
         # Password or personal access token used to log against the Docker registry
@@ -35,5 +32,5 @@ jobs:
         context: ./Backend
         file: ./Backend/Dockerfile
         push: true
-        tags: ${{ env.REGISTRY }}/clip-api:latest
+        tags: ${{ secrets.REGISTRY }}/clip-api:latest
 
