@@ -26,7 +26,8 @@ jobs:
         ecr: auto
         # Log out from the Docker registry at the end of a job
         logout: true
-        
+    - name: Overwrite driveapi.p12
+      run: base64 --decode ${{ secrets.DRIVEAPI }} > ./Backend/driveapi.p12
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
