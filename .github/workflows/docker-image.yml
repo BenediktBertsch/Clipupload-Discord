@@ -34,4 +34,4 @@ jobs:
         context: ./Backend
         file: ./Backend/Dockerfile
         push: true
-        tags: clip-api:latest
+        tags: ${{ secrets.REGISTRY }}/clip-api:latest
