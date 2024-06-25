@@ -11,18 +11,12 @@
         public required string RoleId { get; set; }
         public required string ChannelId { get; set; }
     }
-    public class MigrationSettings
-    {
-        public required string MigrationString { get; set; }
-        public required string ClipsPath { get; set; }
-    }
-    public class DatabaseSettings
-    {
-        public required string StandardString { get; set; }
-    }
     public class AppSettings
     {
-        public required string Backend { get; set; }
         public required string FrontEnd { get; set; }
+    }
+    public class FilesSettings
+    {
+        public required string Path { get; set; }
     }
 }

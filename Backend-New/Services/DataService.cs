@@ -83,15 +83,5 @@ namespace Backend.Services
                 }
             }
         }
-
-        internal async Task<ulong> GetUserId(string accessToken)
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, _discordSettings.EndPoint + "/users/@me");
-            request.Headers.Authorization = AuthenticationHeaderValue.Parse(accessToken);
-            var response = await _client.SendAsync(request);
-            var content = await response.Content.ReadAsStringAsync();
-            var me = JsonConvert.DeserializeObject<Me>(content);
-            return Convert.ToUInt64(me.Id);
-        }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using Backend.Models;
 using Backend.Services;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Linq;
+using Discord;
+using Discord.Rest;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Backend.Middleware
 {
@@ -37,40 +35,68 @@ namespace Backend.Middleware
             {
                 context.Request.Method = HttpMethods.Get;
             }
+
             var pathCheck = _middlewareFilter.Any(f => f.Path == context.Request.Path.Value);
             var methodCheck = _middlewareFilter.Where(f => f.Path == context.Request.Path.Value).ToList().Any(m => m.Method == context.Request.Method);
             if (context.Request.Path.Value.StartsWith(_middlewareFilter[3].Path) && _middlewareFilter[3].Method == context.Request.Method || // Special case
                 pathCheck && methodCheck)
             {
                 string authHeader = context.Request.Headers["Authorization"];
-                if (authHeader == null)
+
+                if (authHeader.Split(" ").Length == 0)
                 {
-                    context.Response.ContentType = "application/json; charset=utf-8";
-                    context.Response.StatusCode = 401;
-                    await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes("{ \"error\": \"Could not validate the authentication!\"}"));
+                    await BadValidation(context);
                     return;
                 }
-                context.Items["userid"] = await DiscordService.GetId(authHeader);
-                if (authHeader != null && authHeader.StartsWith("Bearer") && _discordService.CheckUserGroup((ulong)context.Items["userid"]))
+
+                var bearerToken = authHeader.Split(" ")[1];
+                if (authHeader == null || bearerToken == null)
                 {
-                    if(!_videos.User.AsQueryable().Any(u => u.Id == (ulong)context.Items["userid"]))
+                    await BadValidation(context);
+                    return;
+                }
+
+                var restClient = new DiscordRestClient();
+                try
+                {
+                    await restClient.LoginAsync(TokenType.Bearer, bearerToken);
+                }
+                catch (Exception ex)
+                {
+                    await Console.Out.WriteLineAsync(ex.Message);
+                    await BadValidation(context);
+                    return;
+                }
+                
+                context.Items["userid"] = restClient.CurrentUser.Id;
+
+                if (await _discordService.CheckUserInGuild(restClient.CurrentUser.Id))
+                {
+                    if(!_videos.User.AsQueryable().Any(u => u.Id == restClient.CurrentUser.Id))
                     {
-                        _videos.User.Add(new User() { Id = (ulong)context.Items["userid"], Post = true });
+                        _videos.User.Add(new User() { Id = restClient.CurrentUser.Id, Post = true });
                         await _videos.SaveChangesAsync();
                     }
+                    await restClient.DisposeAsync();
                     await next.Invoke(context);
                 }
                 else
                 {
-                    context.Response.ContentType = "application/json; charset=utf-8";
-                    context.Response.StatusCode = 401;
-                    await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes("{ \"error\": \"Could not validate the authentication!\"}"));
+                    await restClient.DisposeAsync();
+                    await BadValidation(context);
                     return;
                 }
             } else
             {
                 await next.Invoke(context);
             }
+        }
+
+        private async Task BadValidation(HttpContext context)
+        {
+            context.Response.ContentType = "application/json; charset=utf-8";
+            context.Response.StatusCode = 401;
+            await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes("{ \"error\": \"Could not validate the authentication!\"}"));
         }
     }
 }
