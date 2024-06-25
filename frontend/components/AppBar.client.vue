@@ -29,7 +29,7 @@ onBeforeMount(async () => {
     // Weird workaround... before a request is executed correctly.
     await nextTick()
     if (login_code) {
-        var result = await UserHandling.getLogin(config.public.apiUrl + "/", String(login_code));
+        var result = await UserHandling.getLogin(config.public.apiUrl, String(login_code));
         if (result && result.loginStatus) {
             loginStatus.value = result.loginStatus;
             snackbarInformUserText.value = "User logged in successfully."
