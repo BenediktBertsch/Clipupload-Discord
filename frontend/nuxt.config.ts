@@ -20,9 +20,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      base_url: "http://localhost:3000/",
-      api_url: "https://localhost:7044/",
-      discord_url: ""
+      baseUrl: "http://localhost:3000/",
+      apiUrl: "https://localhost:7044/",
+      discordUrl: ""
     },
   },
   vite: {

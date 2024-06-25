@@ -114,7 +114,7 @@ async function uploadVideo(file: VideoUpload) {
                 resolve({ success: false, error: ans.detail })
             }
         });
-        request.open("POST", `${config.public.api_url}upload`);
+        request.open("POST", `${config.public.apiUrl}upload`);
         request.setRequestHeader("Authorization",
             "Bearer " + localStorage.getItem("token"));
         request.send(data);

@@ -10,12 +10,12 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure CORS
-builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
-{
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-}));
+// builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+// {
+//     builder.AllowAnyOrigin()
+//            .AllowAnyMethod()
+//            .AllowAnyHeader();
+// }));
 
 // Configure Settings (reading appsettings.json / env variables)
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("App"));
@@ -67,7 +67,7 @@ builder.Services.Configure<FormOptions>(options =>
 var app = builder.Build();
 
 // Enable MyPolicy of CORS for local development
-app.UseCors("MyPolicy");
+// app.UseCors("MyPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

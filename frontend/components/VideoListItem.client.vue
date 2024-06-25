@@ -15,7 +15,7 @@
         <v-dialog style="max-width: 50%;" v-model="dialog">
             <v-card>
                 <v-card-title> {{ video.name }} </v-card-title>
-                    <VideoPlayer :video_url="`${config.public.base_url}${video.id}.mp4`" :thumb_url="`${config.public.base_url}${video.id}.avif`" />
+                    <VideoPlayer :video_url="`${config.public.baseUrl}${video.id}.mp4`" :thumb_url="`${config.public.baseUrl}${video.id}.avif`" />
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" @click="dialog = false" style="width: 100%">
@@ -78,7 +78,7 @@ function openDeleteVideoDialog() {
 }
 
 async function deleteVideo(id: string) {
-    const resp = await VideoHandling.deleteVideo(config.public.api_url, id)
+    const resp = await VideoHandling.deleteVideo(config.public.apiUrl, id)
     // Snackbar
     if (resp.success) {
         emit("deleteVideo", id);
@@ -89,7 +89,7 @@ async function deleteVideo(id: string) {
 }
 
 function copyVideoURL(id: string) {
-    navigator.clipboard.writeText(`${config.public.base_url}video/${id}`);
+    navigator.clipboard.writeText(`${config.public.baseUrl}video/${id}`);
 }
 
 </script>

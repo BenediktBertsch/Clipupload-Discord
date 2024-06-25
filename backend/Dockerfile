@@ -22,4 +22,9 @@ RUN dotnet publish "./Backend.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+USER root
+RUN apt update && apt install ffmpeg -y
+
+USER app
 ENTRYPOINT ["dotnet", "Backend.dll"]

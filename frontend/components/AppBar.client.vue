@@ -8,7 +8,7 @@
         </v-toolbar-items>
         <v-spacer />
         <v-btn v-if="loginStatus" @click="logout()">Logout</v-btn>
-        <v-btn v-else :href="config.public.discord_url">Login</v-btn>
+        <v-btn v-else :href="config.public.discordUrl">Login</v-btn>
     </v-app-bar>
 </template>
 
@@ -29,7 +29,7 @@ onBeforeMount(async () => {
     // Weird workaround... before a request is executed correctly.
     await nextTick()
     if (login_code) {
-        var result = await UserHandling.getLogin(config.public.api_url, String(login_code));
+        var result = await UserHandling.getLogin(config.public.apiUrl, String(login_code));
         if (result && result.loginStatus) {
             loginStatus.value = result.loginStatus;
             snackbarInformUserText.value = "User logged in successfully."
@@ -39,7 +39,7 @@ onBeforeMount(async () => {
     }
     var refresh = await UserHandling.validateLogin();
     if (refresh && refresh.refreshToken !== null && !refresh.refreshToken) {
-        var result = await UserHandling.refreshToken(config.public.api_url);
+        var result = await UserHandling.refreshToken(config.public.apiUrl);
         loginStatus.value = result.loginStatus;
         if (result.loginStatus) {
             snackbarInformUserText.value = "User credentials refreshed successfully."

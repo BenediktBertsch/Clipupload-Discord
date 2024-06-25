@@ -61,7 +61,7 @@ function endlessScroll() {
 }
 
 async function getVideos() {
-    var videorequest = await VideoHandling.fetchVideos(config.public.api_url, videoCount, videoOffset);
+    var videorequest = await VideoHandling.fetchVideos(config.public.apiUrl, videoCount, videoOffset);
     if (videorequest.success) {
         videorequest.videos.forEach((video) => {
             videos.value.push(video);
