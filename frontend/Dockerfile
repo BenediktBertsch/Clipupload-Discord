@@ -32,7 +32,7 @@ ENV NODE_ENV=production
 COPY --from=install /temp/prod/node_modules node_modules
 COPY --from=prerelease /usr/src/app/.output .output
 COPY --from=prerelease /usr/src/app/package.json .
-RUN apt update -y && apt install -y wget
+
 # run the app
 USER bun
 EXPOSE 3000/tcp
