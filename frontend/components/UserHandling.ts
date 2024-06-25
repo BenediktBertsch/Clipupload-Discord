@@ -15,7 +15,7 @@ export abstract class UserHandling {
     }
 
     public static async refreshToken(apiEdnpoint: string) {
-        const data  = await $fetch<LoginRequest>(`${apiEdnpoint}refresh?refresh_token=${localStorage.getItem("refreshToken")}`, {
+        const data  = await $fetch<LoginRequest>(`${apiEdnpoint}/refresh?refresh_token=${localStorage.getItem("refreshToken")}`, {
             method: "POST"
         })
         if (data) {
@@ -31,7 +31,7 @@ export abstract class UserHandling {
     }
 
     public static async getLogin(apiEndpoint: string, loginCode: string) {
-        const data = await $fetch<LoginRequest>(`${apiEndpoint}login?code=${loginCode}`, {
+        const data = await $fetch<LoginRequest>(`${apiEndpoint}/login?code=${loginCode}`, {
             method: "POST"
         })
         if (data) {

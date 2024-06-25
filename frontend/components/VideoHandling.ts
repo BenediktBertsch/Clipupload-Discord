@@ -2,7 +2,7 @@ import type { VideosRequest } from "~/utils/schemas"
 
 export abstract class VideoHandling {
     public static async fetchVideos(apiEndpoint: string, count: number = 24, offset: number = 0) {
-        const data = await $fetch<VideosRequest>(`${apiEndpoint}videos?count=${count}&offset=${offset}`, {
+        const data = await $fetch<VideosRequest>(`${apiEndpoint}/videos?count=${count}&offset=${offset}`, {
             method: "GET",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
@@ -15,7 +15,7 @@ export abstract class VideoHandling {
     }
 
     public static async deleteVideo(apiEndpoint: string, id: string) {
-        const data = await $fetch<VideosRequest>(`${apiEndpoint}video/${id}`, {
+        const data = await $fetch<VideosRequest>(`${apiEndpoint}/video/${id}`, {
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + localStorage.getItem("token"),
