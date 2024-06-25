@@ -36,4 +36,4 @@ RUN apt update -y && apt install -y wget
 # run the app
 USER bun
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", ".output/server/index.mjs" ]
+CMD [ "node", ".output/server/index.mjs" ]
