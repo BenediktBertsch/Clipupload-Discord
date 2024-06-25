@@ -1,14 +1,8 @@
 ﻿using Backend.Models;
 using FFMpegCore.Enums;
 using FFMpegCore;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Security.Policy;
 using System.Text;
-using FFMpegCore.Pipes;
-using Discord.Audio.Streams;
 
 namespace Backend
 {

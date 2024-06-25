@@ -1,10 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using Backend.Models;
-using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 
 namespace Backend.Services
@@ -77,7 +73,7 @@ namespace Backend.Services
                         new KeyValuePair<string, string>("client_secret",  _discordSettings.SecretBot),
                         new KeyValuePair<string, string>("grant_type", "authorization_code"),
                         new KeyValuePair<string, string>("code", code),
-                        new KeyValuePair<string, string>("redirect_uri", _appSettings.FrontEnd),
+                        new KeyValuePair<string, string>("redirect_uri", _appSettings.Frontend),
                         new KeyValuePair<string, string>( "scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
                     };
                 }

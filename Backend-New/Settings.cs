@@ -13,7 +13,7 @@
     }
     public class AppSettings
     {
-        public required string FrontEnd { get; set; }
+        public required string Frontend { get; set; }
     }
     public class FilesSettings
     {
