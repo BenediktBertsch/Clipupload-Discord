@@ -25,7 +25,7 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ghcr.io/BenediktBertsch/clip-backend:latest
+        tags: ghcr.io/benediktbertsch/clip-backend:latest
   build-frontend:
     defaults:
       run:
@@ -44,4 +44,4 @@ jobs:
       with:
         file: ./Dockerfile
         push: true
-        tags: ghcr.io/BenediktBertsch/clip-frontend:latest
+        tags: ghcr.io/benediktbertsch/clip-frontend:latest
