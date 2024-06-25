@@ -23,7 +23,8 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        file: ./Dockerfile
+        context: ./backend
+        file: ./backend/Dockerfile
         push: true
         tags: ghcr.io/benediktbertsch/clip-backend:latest
   build-frontend:
@@ -42,6 +43,7 @@ jobs:
     - name: Build and push
       uses: docker/build-push-action@v2
       with:
-        file: ./Dockerfile
+        context: ./frontend
+        file: ./frontend/Dockerfile
         push: true
         tags: ghcr.io/benediktbertsch/clip-frontend:latest
