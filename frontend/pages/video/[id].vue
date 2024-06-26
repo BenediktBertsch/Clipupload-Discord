@@ -13,8 +13,7 @@ async function getSEOMetadata(api_endpoint: string, id: string) {
     const { data, error } = await useFetch<SEOMetadata>(api_seodata, {
         method: "GET"
     })
-    console.log(data.value?.video.user)
-    return { username: data.value?.username, title: data.value?.video.name, user: data.value?.video.user }
+    return { username: data.value?.username, title: data.value?.video.name, user: data.value?.userId }
 }
 
 function getUrls(base_url: string, user: string, id: string) {

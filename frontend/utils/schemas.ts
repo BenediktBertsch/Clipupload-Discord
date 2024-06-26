@@ -2,6 +2,7 @@ export interface SEOMetadata {
   success: boolean;
   video: Video;
   username: string;
+  userId: string,
 }
 
 export interface LoginRequest {
@@ -23,6 +24,7 @@ export interface VideosRequest {
   success: boolean,
   videoCount: number,
   videos: Video[],
+  userId: string,
 }
 
 export interface VideoUploadResultSuccess {

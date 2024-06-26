@@ -4,7 +4,7 @@
             <span>{{ video.name }}</span>
         </v-tooltip>
         <v-img @click="openVideoDialog()" style="width: 100%; height: auto"
-            :src="`${config.public.baseUrl}/files/${video.user}/${video.id}.avif`" />
+            :src="`${config.public.baseUrl}/files/${userId}/${video.id}.avif`" />
         <v-btn @click="copyVideoURL(video.id)" color="success" tile style="width: 100%">
             Share
         </v-btn>
@@ -50,7 +50,8 @@
 import { VideoHandling } from './VideoHandling';
 import type { Video } from '~/utils/schemas';
 const props = defineProps<{
-    video: Video
+    video: Video,
+    userId: string,
 }>()
 const emit = defineEmits<{
     (e: 'deleteVideo', id: string): void

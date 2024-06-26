@@ -9,7 +9,7 @@ export abstract class VideoHandling {
             }
         })
         if (data) {
-            return { max: data.max, success: data.success, videoCount: data.videoCount, videos: data.videos } as VideosRequest
+            return { max: data.max, success: data.success, videoCount: data.videoCount, videos: data.videos, userId: data.userId } as VideosRequest
         }
         return { success: false } as VideosRequest
     }

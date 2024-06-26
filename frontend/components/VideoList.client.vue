@@ -10,7 +10,7 @@
               align-self: baseline;
             ">
             <div style="margin: 8px; flex-basis: 25rem" v-for="(video, i) in videos" :key="i">
-                <VideoListItem @delete-video="deleteVideo" :video="video" />
+                <VideoListItem @delete-video="deleteVideo" :video="video" :userId="userId" />
             </div>
         </div>
     </div>
@@ -24,7 +24,7 @@ const config = useRuntimeConfig();
 const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required: true });
 const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const videos = defineModel<Video[]>("videos", { required: true });
-
+const userId = ref("");
 let videoCount = 24;
 let videoMax = 0;
 let videoOffset = 0;
@@ -67,6 +67,7 @@ async function getVideos() {
             videos.value.push(video);
         });
         videoMax = videorequest.max;
+        userId.value = videorequest.userId;
     }
 }
 
