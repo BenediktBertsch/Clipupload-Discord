@@ -36,7 +36,7 @@ namespace Backend.Services
 
         internal static async Task<string> GetUsernameById(ulong id)
         {
-            var user = await _restClient.GetUserAsync(_restClient.CurrentUser.Id);
+            var user = await _restClient.GetUserAsync(id);
             return user.Username;
         }
     }
