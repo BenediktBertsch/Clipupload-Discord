@@ -161,7 +161,7 @@ namespace Backend.Controllers
                 return Ok(new
                 {
                     success = true,
-                    videos = allVideos
+                    videos = allVideos,
                     userId = video.User.ToString(),
                 });
             }
