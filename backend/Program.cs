@@ -33,6 +33,9 @@ builder.Services.AddScoped<AuthenticationMiddleware>();
 builder.Services.AddDbContextFactory<VideosContext>(options => {
     options.UseSqlite("Data Source=" + Environment.GetEnvironmentVariable("Files__Path") + "\\videos.db");
 });
+
+Console.WriteLine("DB should be here: " + Environment.GetEnvironmentVariable("Files__Path") + "\\videos.db");
+
 builder.Services.AddScoped(p => p.GetRequiredService<IDbContextFactory<VideosContext>>().CreateDbContext());
 
 builder.Services.AddControllers();
