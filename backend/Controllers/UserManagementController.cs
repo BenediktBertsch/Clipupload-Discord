@@ -152,7 +152,7 @@ namespace Backend.Controllers
                 {
                     success = true,
                     videos = allVideos.Skip((int)offset).Take((int)count),
-                    userId = video.User.ToString(),
+                    userId = allVideos[0].User.ToString(),
                     videoCount = count,
                     max = allVideos.Count
                 });
