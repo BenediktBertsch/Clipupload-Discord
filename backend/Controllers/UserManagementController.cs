@@ -162,7 +162,7 @@ namespace Backend.Controllers
                 {
                     success = true,
                     videos = allVideos,
-                    userId = video.User.ToString(),
+                    userId = allVideos[0].User.ToString(),
                 });
             }
         }
