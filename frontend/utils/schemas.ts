@@ -15,7 +15,7 @@ export interface Video {
   id: string,
   hash: string,
   name: string,
-  user: number
+  user: bigint
 }
 
 export interface VideosRequest {

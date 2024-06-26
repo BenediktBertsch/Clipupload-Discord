@@ -10,7 +10,7 @@ import VideoPlayer from '~/components/VideoPlayer.client.vue'
 
 async function getSEOMetadata(api_endpoint: string, id: string) {
     const api_seodata = api_endpoint + "/video/" + id
-    const { data, error } = await useFetch(api_seodata, {
+    const { data, error } = await useFetch<SEOMetadata>(api_seodata, {
         method: "GET"
     })
     console.log(data.value?.video.user)
