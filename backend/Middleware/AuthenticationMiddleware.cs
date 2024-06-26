@@ -41,6 +41,7 @@ namespace Backend.Middleware
             if (context.Request.Path.Value.StartsWith(_middlewareFilter[3].Path) && _middlewareFilter[3].Method == context.Request.Method || // Special case
                 pathCheck && methodCheck)
             {
+                await Console.Out.WriteLineAsync(context.Request.Headers["Authorization"]);
                 string authHeader = context.Request.Headers["Authorization"];
 
                 if (authHeader.Split(" ").Length == 0)
