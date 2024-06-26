@@ -14,10 +14,6 @@ async function getSEOMetadata(api_endpoint: string, id: string) {
         method: "GET"
     })
 
-    if (error.value != null) {
-        console.log(error)
-    }
-
     return { username: data.value?.username, title: data.value?.name }
 }
 
