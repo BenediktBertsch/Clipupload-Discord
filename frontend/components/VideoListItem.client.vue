@@ -4,7 +4,7 @@
             <span>{{ video.name }}</span>
         </v-tooltip>
         <v-img @click="openVideoDialog()" style="width: 100%; height: auto"
-            :src="`${config.public.base_url}/${video.id}.avif`" />
+            :src="`${config.public.baseUrl}/${video.id}.avif`" />
         <v-btn @click="copyVideoURL(video.id)" color="success" tile style="width: 100%">
             Share
         </v-btn>
