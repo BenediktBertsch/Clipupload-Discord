@@ -14,11 +14,11 @@ async function getSEOMetadata(api_endpoint: string, id: string) {
         method: "GET"
     })
 
-    return { username: data.value?.username, title: data.value?.name }
+    return { username: data.value?.username, title: data.value?.video.name, user: data.value?.video.user }
 }
 
-function getUrls(base_url: string, id: string) {
-    return { video_url: base_url + id + '.mp4', thumb_url: base_url + id + '.avif' }
+function getUrls(base_url: string, user: number, id: string) {
+    return { video_url: base_url + "/files/" + user + "/" + id + '.mp4', thumb_url: base_url + "/files/" + user + "/" + id + '.avif' }
 }
 
 function setSEOMeta(title: string, username: string, video_url: string, thumb_url: string,) {
@@ -47,8 +47,8 @@ let VIDEO_NOT_FOUND = false;
 const config = useRuntimeConfig();
 const route = useRoute();
 const param_id = String(route.params.id);
-const urls = getUrls(config.public.base_url, param_id);
 const metadata = await getSEOMetadata(config.public.apiUrl, param_id);
+const urls = getUrls(config.public.base_url, metadata.user, param_id);
 if (metadata.title && metadata.username)
     setSEOMeta(metadata.title, metadata.username, urls.video_url, urls.thumb_url);
 else

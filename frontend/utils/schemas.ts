@@ -1,6 +1,6 @@
 export interface SEOMetadata {
   success: boolean;
-  name: string;
+  video: Video;
   username: string;
 }
 
