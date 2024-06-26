@@ -27,5 +27,5 @@ COPY --from=publish /app/publish .
 USER root
 RUN apt update && apt install ffmpeg -y
 
-USER app
+# USER app
 ENTRYPOINT ["dotnet", "Backend.dll"]

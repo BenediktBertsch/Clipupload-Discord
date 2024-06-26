@@ -48,7 +48,7 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const param_id = String(route.params.id);
 const metadata = await getSEOMetadata(config.public.apiUrl, param_id);
-const urls = getUrls(config.public.base_url, metadata.user, param_id);
+const urls = getUrls(config.public.baseUrl, metadata.user, param_id);
 if (metadata.title && metadata.username)
     setSEOMeta(metadata.title, metadata.username, urls.video_url, urls.thumb_url);
 else

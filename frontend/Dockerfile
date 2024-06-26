@@ -34,6 +34,6 @@ COPY --from=prerelease /usr/src/app/.output .output
 COPY --from=prerelease /usr/src/app/package.json .
 
 # run the app
-USER bun
+# USER bun
 EXPOSE 3000/tcp
 CMD [ "node", ".output/server/index.mjs" ]
