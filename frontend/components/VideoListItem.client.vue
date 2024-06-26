@@ -15,7 +15,7 @@
         <v-dialog style="max-width: 50%;" v-model="dialog">
             <v-card>
                 <v-card-title> {{ video.name }} </v-card-title>
-                    <VideoPlayer :video_url="`${config.public.baseUrl}/${video.id}.mp4`" :thumb_url="`${config.public.baseUrl}/${video.id}.avif`" />
+                    <VideoPlayer :video_url="`${config.public.baseUrl}/files/${userId}/${video.id}.mp4`" :thumb_url="`${config.public.baseUrl}/${video.id}.avif`" />
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" @click="dialog = false" style="width: 100%">
