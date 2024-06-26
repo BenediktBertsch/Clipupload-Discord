@@ -122,7 +122,7 @@ namespace Backend.Controllers
                 return BadRequest(new { error = "Video with this id not found." });
             }
             var username = await DiscordService.GetUsernameById(video.User);
-            return Ok(new { success = true, video, username });
+            return Ok(new { success = true, video, userId = video.User.ToString(), username });
         }
     }
 }

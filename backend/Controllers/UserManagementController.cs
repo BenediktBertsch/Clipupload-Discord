@@ -152,6 +152,7 @@ namespace Backend.Controllers
                 {
                     success = true,
                     videos = allVideos.Skip((int)offset).Take((int)count),
+                    userId = video.User.ToString(),
                     videoCount = count,
                     max = allVideos.Count
                 });
@@ -161,6 +162,7 @@ namespace Backend.Controllers
                 {
                     success = true,
                     videos = allVideos
+                    userId = video.User.ToString(),
                 });
             }
         }
