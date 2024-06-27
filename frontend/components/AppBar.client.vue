@@ -38,6 +38,7 @@ onBeforeMount(async () => {
             snackbarInformUserText.value = "User logged in successfully."
             snackbarInformUser.value = true;
             navigateTo("/");
+            return
         }
     }
 
