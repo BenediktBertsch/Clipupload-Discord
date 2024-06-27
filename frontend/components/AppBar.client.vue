@@ -28,6 +28,8 @@ onBeforeMount(async () => {
     const login_code = route.query.code;
     // Weird workaround... before a request is executed correctly.
     await nextTick()
+
+    // Check code
     if (login_code) {
         var result = await UserHandling.getLogin(config.public.apiUrl, String(login_code));
         if (result && result.loginStatus) {
@@ -37,6 +39,13 @@ onBeforeMount(async () => {
             navigateTo("/")
         }
     }
+    
+    // Check user has a token
+    if (localStorage.getItem("token") === null) {
+        return
+    }
+    
+    // If user has token, validate creds
     var refresh = await UserHandling.validateLogin();
     if (refresh && refresh.refreshToken !== null && !refresh.refreshToken) {
         var result = await UserHandling.refreshToken(config.public.apiUrl);

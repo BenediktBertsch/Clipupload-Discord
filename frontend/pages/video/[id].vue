@@ -1,5 +1,5 @@
 <template>
-    <VideoPlayer v-show="!VIDEO_NOT_FOUND" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
+    <VideoPlayer style="height: 75%;" v-show="!VIDEO_NOT_FOUND" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
     <div v-show="VIDEO_NOT_FOUND">
         Video not found.
     </div>
