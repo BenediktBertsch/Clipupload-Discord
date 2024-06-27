@@ -48,8 +48,8 @@ namespace Backend.Controllers
 
                 string hash = Utils.GenerateHash(_md5alg, file.OpenReadStream());
                 string id = Utils.GenerateId(_videos);
-                string videoPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4");
-                string thumbnailPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif");
+                string videoPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".mp4");
+                string thumbnailPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".avif");
                 await Console.Out.WriteLineAsync(videoPath);
                 var createFileSuccess = Utils.CreateFile(file.OpenReadStream(), videoPath);
                 if (!createFileSuccess)
@@ -73,7 +73,7 @@ namespace Backend.Controllers
                 _videos.Add(newVideo);
                 if(await _videos.SaveChangesAsync() == 1)
                 {
-                    await _discordService.PostVideo(_appSettings.Frontend + "/video/" + newVideo.Id);
+                    //await _discordService.PostVideo(_appSettings.Frontend + "/video/" + newVideo.Id);
                     return Ok(new { success = true, video = newVideo });
                 }
 
@@ -107,8 +107,8 @@ namespace Backend.Controllers
             {
                 return BadRequest(new { error = "Video with this id not found." });
             }
-            string videoPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4");
-            string thumbnailPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif");
+            string videoPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".mp4");
+            string thumbnailPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".avif");
             System.IO.File.Delete(videoPath);
             System.IO.File.Delete(thumbnailPath);
 
