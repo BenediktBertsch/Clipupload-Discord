@@ -17,7 +17,6 @@ async function getSEOMetadata(api_endpoint: string, id: string) {
 }
 
 function getUrls(base_url: string, user: string, id: string) {
-    console.log(user)
     return { video_url: base_url + "/files/" + user + "/" + id + '.mp4', thumb_url: base_url + "/files/" + user + "/" + id + '.avif' }
 }
 

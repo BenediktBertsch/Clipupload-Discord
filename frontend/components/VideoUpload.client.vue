@@ -72,7 +72,6 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
-    console.log("Upload unmounted!")
     uploadVideos.value = [];
 })
 

@@ -69,7 +69,6 @@ namespace Backend.Services
                 else
                 {
                     var url = _appSettings.Frontend.Last() == '/' ? _appSettings.Frontend : _appSettings.Frontend + '/';
-                    Console.WriteLine(url);
                     return new List<KeyValuePair<string, string>> {
                         new KeyValuePair<string, string>("client_id", _discordSettings.IdBot),
                         new KeyValuePair<string, string>("client_secret",  _discordSettings.SecretBot),
