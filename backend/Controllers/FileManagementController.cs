@@ -48,8 +48,8 @@ namespace Backend.Controllers
 
                 string hash = Utils.GenerateHash(_md5alg, file.OpenReadStream());
                 string id = Utils.GenerateId(_videos);
-                string videoPath = _filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4";
-                string thumbnailPath = _filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif";
+                string videoPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4");
+                string thumbnailPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif");
 
                 var createFileSuccess = Utils.CreateFile(file.OpenReadStream(), videoPath);
                 if (!createFileSuccess)
@@ -107,8 +107,8 @@ namespace Backend.Controllers
             {
                 return BadRequest(new { error = "Video with this id not found." });
             }
-            string videoPath = _filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4";
-            string thumbnailPath = _filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif";
+            string videoPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4");
+            string thumbnailPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif");
             System.IO.File.Delete(videoPath);
             System.IO.File.Delete(thumbnailPath);
 
