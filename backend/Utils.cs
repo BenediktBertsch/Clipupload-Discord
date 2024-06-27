@@ -49,8 +49,9 @@ namespace Backend
                 args.OutputToFile(thumbnailPath, false, opts).ProcessSynchronously();
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return false;
             }
             
@@ -65,6 +66,7 @@ namespace Backend
                 stream.Read(bytes, 0, bytes.Length);
                 newFile.Write(bytes, 0, bytes.Length);
                 stream.Close();
+                newFile.Close();
                 return true;
             }
             catch (Exception)

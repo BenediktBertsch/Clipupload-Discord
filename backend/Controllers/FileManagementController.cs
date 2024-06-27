@@ -12,12 +12,16 @@ namespace Backend.Controllers
         private readonly VideosContext _videos;
         private readonly MD5 _md5alg;
         private readonly FilesSettings _filesSettings;
+        private readonly AppSettings _appSettings;
+        private readonly DiscordService _discordService;
 
-        public FileManagementController(VideosContext videos, IOptions<FilesSettings> filesSettings)
+        public FileManagementController(VideosContext videos, IOptions<FilesSettings> filesSettings, IOptions<AppSettings> appSettings, DiscordService discordService)
         {
             _videos = videos;
             _filesSettings = filesSettings.Value;
+            _appSettings = appSettings.Value;
             _md5alg = (MD5)CryptoConfig.CreateFromName("MD5");
+            _discordService = discordService;
         }
 
         [HttpPost]
@@ -65,10 +69,11 @@ namespace Backend.Controllers
                     );
                 }
 
-                var newVideo = new Video { Date = new DateTime(), Id = id, Name = name, User = (ulong)userId, Hash = hash };
+                var newVideo = new Video { Date = DateTime.Now, Id = id, Name = name, User = (ulong)userId, Hash = hash };
                 _videos.Add(newVideo);
                 if(await _videos.SaveChangesAsync() == 1)
                 {
+                    await _discordService.PostVideo(_appSettings.Frontend + "/video/" + newVideo.Id);
                     return Ok(new { success = true, video = newVideo });
                 }
 

@@ -11,11 +11,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="clips\**" />
+    <Content Remove="clips\**" />
+    <EmbeddedResource Remove="clips\**" />
+    <None Remove="clips\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BouncyCastle.Cryptography" Version="2.4.0" />
     <PackageReference Include="Discord.Net" Version="3.15.0" />
-    <Reference Include="FFMpegCore">
-      <HintPath>./ffmpeg/FFMpegCore.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Instances" Version="3.0.0" />
     <!-- <PackageReference Include="FFMpegCore" Version="5.1.0" /> Not supporting AV1 -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
@@ -31,6 +36,13 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.6" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FFMpegCore">
+      <HintPath>ffmpeg\FFMpegCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
