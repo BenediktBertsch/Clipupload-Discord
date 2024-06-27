@@ -15,7 +15,7 @@ export abstract class UserHandling {
     }
 
     public static async refreshToken(apiEdnpoint: string) {
-        const data  = await $fetch<LoginRequest>(`${apiEdnpoint}/refresh?refresh_token=${localStorage.getItem("refreshToken")}`, {
+        const data = await $fetch<LoginRequest>(`${apiEdnpoint}/refresh?refresh_token=${localStorage.getItem("refreshToken")}`, {
             method: "POST"
         })
         if (data) {
@@ -46,10 +46,14 @@ export abstract class UserHandling {
         return { loginStatus: false }
     }
 
-    public static setLogout() {
+    public static removeStorageItems() {
         localStorage.removeItem("token");
         localStorage.removeItem("expires_in");
         localStorage.removeItem("refreshToken");
+    }
+
+    public static setLogout() {
+        this.removeStorageItems();
         return { loginStatus: false }
     }
 }

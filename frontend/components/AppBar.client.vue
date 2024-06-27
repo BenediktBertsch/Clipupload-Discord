@@ -31,20 +31,21 @@ onBeforeMount(async () => {
 
     // Check code
     if (login_code) {
+        UserHandling.removeStorageItems();
         var result = await UserHandling.getLogin(config.public.apiUrl, String(login_code));
         if (result && result.loginStatus) {
             loginStatus.value = result.loginStatus;
             snackbarInformUserText.value = "User logged in successfully."
             snackbarInformUser.value = true;
-            navigateTo("/")
+            navigateTo("/");
         }
     }
-    
+
     // Check user has a token
     if (localStorage.getItem("token") === null) {
         return
     }
-    
+
     // If user has token, validate creds
     var refresh = await UserHandling.validateLogin();
     if (refresh && refresh.refreshToken !== null && !refresh.refreshToken) {
