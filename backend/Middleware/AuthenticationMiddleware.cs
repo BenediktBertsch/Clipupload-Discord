@@ -38,10 +38,10 @@ namespace Backend.Middleware
 
             var pathCheck = _middlewareFilter.Any(f => f.Path == context.Request.Path.Value);
             var methodCheck = _middlewareFilter.Where(f => f.Path == context.Request.Path.Value).ToList().Any(m => m.Method == context.Request.Method);
-            if (context.Request.Path.Value.StartsWith(_middlewareFilter[3].Path) && _middlewareFilter[3].Method == context.Request.Method || // Special case
+            if (context.Request.Path.Value != null && context.Request.Path.Value.StartsWith(_middlewareFilter[3].Path) && _middlewareFilter[3].Method == context.Request.Method || // Special case
                 pathCheck && methodCheck)
             {
-                string authHeader = context.Request.Headers["Authorization"];
+                string authHeader = context.Request.Headers.Authorization;
 
                 if (authHeader.Split(" ").Length == 0)
                 {
@@ -69,7 +69,7 @@ namespace Backend.Middleware
                 }
                 
                 context.Items["userid"] = restClient.CurrentUser.Id;
-
+                await Console.Out.WriteLineAsync(restClient.CurrentUser.Id.ToString());
                 if (await _discordService.CheckUserInGuild(restClient.CurrentUser.Id))
                 {
                     if(!_videos.User.AsQueryable().Any(u => u.Id == restClient.CurrentUser.Id))

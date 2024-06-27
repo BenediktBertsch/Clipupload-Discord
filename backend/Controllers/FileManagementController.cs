@@ -113,8 +113,15 @@ namespace Backend.Controllers
             System.IO.File.Delete(thumbnailPath);
 
             _videos.Remove(video);
-            _videos.SaveChanges();
-            return Ok(new { success = true });
+            if(await _videos.SaveChangesAsync() == 1)
+            {
+                return Ok(new { success = true });
+            }
+
+            return Problem(
+                title: "Server error",
+                detail: "Could not save delete entry to DB!"
+            );
         }
 
         [HttpGet]
