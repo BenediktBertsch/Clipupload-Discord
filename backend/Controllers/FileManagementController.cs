@@ -50,7 +50,7 @@ namespace Backend.Controllers
                 string id = Utils.GenerateId(_videos);
                 string videoPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".mp4");
                 string thumbnailPath = Path.GetFullPath(_filesSettings.Path + "\\" + userId.ToString() + "\\" + id + ".avif");
-
+                await Console.Out.WriteLineAsync(videoPath);
                 var createFileSuccess = Utils.CreateFile(file.OpenReadStream(), videoPath);
                 if (!createFileSuccess)
                 {
