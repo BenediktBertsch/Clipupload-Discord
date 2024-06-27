@@ -68,12 +68,14 @@ namespace Backend.Services
                 }
                 else
                 {
+                    var url = _appSettings.Frontend.Last() == '/' ? _appSettings.Frontend : _appSettings.Frontend + '/';
+                    Console.WriteLine(url);
                     return new List<KeyValuePair<string, string>> {
                         new KeyValuePair<string, string>("client_id", _discordSettings.IdBot),
                         new KeyValuePair<string, string>("client_secret",  _discordSettings.SecretBot),
                         new KeyValuePair<string, string>("grant_type", "authorization_code"),
                         new KeyValuePair<string, string>("code", code),
-                        new KeyValuePair<string, string>("redirect_uri", _appSettings.Frontend),
+                        new KeyValuePair<string, string>("redirect_uri", url),
                         new KeyValuePair<string, string>( "scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
                     };
                 }
