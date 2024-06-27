@@ -82,8 +82,9 @@ async function deleteVideo(id: string) {
     const resp = await VideoHandling.deleteVideo(config.public.apiUrl, id)
     // Snackbar
     if (resp.success) {
-        emit("deleteVideo", id);
         deleteDialog.value = false;
+        timer.value = 5;
+        emit("deleteVideo", id);
     } else {
         
     }
