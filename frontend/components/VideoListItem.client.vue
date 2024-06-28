@@ -36,7 +36,7 @@
                     <v-btn color="error" @click="deleteDialog = false" style="width: 50%">
                         Close
                     </v-btn>
-                    <v-btn color="success" :disabled="timer > 0" @click="deleteVideo(video.id)" style="width: 50%">
+                    <v-btn color="success" :disabled="timer > 0 || !deleteButtonActive" @click="deleteVideo(video.id)" style="width: 50%">
                         <div v-if="timer > 0">Delete ({{ timer }})</div>
                         <div v-else>Delete</div>
                     </v-btn>
@@ -56,10 +56,13 @@ const props = defineProps<{
 const emit = defineEmits<{
     (e: 'deleteVideo', id: string): void
 }>()
+const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required: true });
+const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const config = useRuntimeConfig();
-let dialog = ref(false);
-let deleteDialog = ref(false);
-let timer = ref(0);
+const deleteButtonActive = ref(true);
+const dialog = ref(false);
+const deleteDialog = ref(false);
+const timer = ref(0);
 
 onMounted(() => {
     setInterval(() => {
@@ -79,14 +82,16 @@ function openDeleteVideoDialog() {
 }
 
 async function deleteVideo(id: string) {
+    deleteButtonActive.value = false;
     const resp = await VideoHandling.deleteVideo(config.public.apiUrl, id)
-    // Snackbar
+    deleteButtonActive.value = true;
     if (resp.success) {
         deleteDialog.value = false;
         timer.value = 5;
         emit("deleteVideo", id);
     } else {
-        
+        snackbarInformUserText.value = "Video could not be deleted..."
+        snackbarInformUser.value = true;
     }
 }
 

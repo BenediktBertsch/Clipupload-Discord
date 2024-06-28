@@ -10,7 +10,9 @@
               align-self: baseline;
             ">
             <div style="margin: 8px; flex-basis: 25rem" v-for="(video, i) in videos" :key="i">
-                <VideoListItem @delete-video="deleteVideo" :video="video" :userId="userId" />
+                <VideoListItem v-model:snackbar-inform-user="snackbarInformUser"
+                    v-model:snackbar-inform-user-text="snackbarInformUserText" @delete-video="deleteVideo"
+                    :video="video" :userId="userId" />
             </div>
         </div>
     </div>

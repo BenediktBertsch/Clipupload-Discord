@@ -13,7 +13,6 @@
     <Suspense>
       <VideoUploadClient @add-video="addVideo" v-if="uploadVideos.length > 0" v-model:upload-videos="uploadVideos" />
     </Suspense>
-
   </div>
   <h1 v-else>Not logged in.</h1>
 </template>
@@ -31,6 +30,15 @@ let videosLoading = ref(false);
 let dragCounter = 0;
 let uploadVideos = ref([] as VideoUpload[]);
 
+
+watch(videos, (newVideos: Video[]) => {
+  if(newVideos.length > 0){
+    noVideos.value = false;
+  }
+  if (newVideos.length == 0){
+    noVideos.value = true;
+  }
+}, { deep: true })
 
 watch(uploadVideos, (newUploadVideos: VideoUpload[]) => {
   uploadVideos.value = newUploadVideos;
