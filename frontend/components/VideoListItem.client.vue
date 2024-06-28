@@ -1,5 +1,6 @@
 <template>
-    <v-card :elevation="8" :title="VideoHandling.formatVideoName(video.name)">
+    <v-card :elevation="8">
+        <v-card-title> {{ VideoHandling.formatVideoName(video.name) }} </v-card-title>
         <v-tooltip top>
             <span>{{ video.name }}</span>
         </v-tooltip>
@@ -15,7 +16,8 @@
         <v-dialog style="max-width: 50%;" v-model="dialog">
             <v-card>
                 <v-card-title> {{ video.name }} </v-card-title>
-                    <VideoPlayer :video_url="`${config.public.baseUrl}/files/${userId}/${video.id}.mp4`" :thumb_url="`${config.public.baseUrl}/files/${userId}/${video.id}.avif`" />
+                <VideoPlayer :video_url="`${config.public.baseUrl}/files/${userId}/${video.id}.mp4`"
+                    :thumb_url="`${config.public.baseUrl}/files/${userId}/${video.id}.avif`" />
                 <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="error" @click="dialog = false" style="width: 100%">
@@ -36,7 +38,8 @@
                     <v-btn color="error" @click="deleteDialog = false" style="width: 50%">
                         Close
                     </v-btn>
-                    <v-btn color="success" :disabled="timer > 0 || !deleteButtonActive" @click="deleteVideo(video.id)" style="width: 50%">
+                    <v-btn color="success" :disabled="timer > 0 || !deleteButtonActive" @click="deleteVideo(video.id)"
+                        style="width: 50%">
                         <div v-if="timer > 0">Delete ({{ timer }})</div>
                         <div v-else>Delete</div>
                     </v-btn>
