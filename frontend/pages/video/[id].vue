@@ -1,7 +1,7 @@
 <template>
-    <VideoPlayer v-if="!videoLoading && !VIDEO_NOT_FOUND"
+    <VideoPlayer v-if="!videoLoading && !videoNotFound"
         style="height: 75%;" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
-    <div v-else-if="!videoLoading && VIDEO_NOT_FOUND">
+    <div v-else-if="!videoLoading && videoNotFound">
         Video not found.
     </div>
 </template>
@@ -15,7 +15,7 @@ const videoLoading = ref(true);
 const config = useRuntimeConfig();
 const route = useRoute();
 const urls = ref();
-let VIDEO_NOT_FOUND = ref(false);
+const videoNotFound = ref(false);
 
 onBeforeMount(async () => {
     // Weird workaround... before a request is executed correctly.
@@ -28,7 +28,7 @@ onBeforeMount(async () => {
         setSEOMeta(metadata.title, metadata.username, urls.value.video_url, urls.value.thumb_url);
     }
     else {
-        VIDEO_NOT_FOUND.value = true;
+        videoNotFound.value = true;
     }
 })
 

@@ -26,9 +26,9 @@ const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required
 const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const videos = ref([] as Video[]);
 const noVideos = ref(false);
-let videosLoading = ref(false);
+const videosLoading = ref(false);
+const uploadVideos = ref([] as VideoUpload[]);
 let dragCounter = 0;
-let uploadVideos = ref([] as VideoUpload[]);
 
 
 watch(videos, (newVideos: Video[]) => {

@@ -75,7 +75,7 @@ onUnmounted(() => {
     uploadVideos.value = [];
 })
 
-function update_progress(e: ProgressEvent) {
+function updateProgress(e: ProgressEvent) {
     uploadVideos.value![uploadingIndex.value - delIndex.value].uploadProgress = Math.floor(e.loaded / (uploadVideos.value![uploadingIndex.value - delIndex.value].video.size / 100));
 }
 
@@ -84,7 +84,7 @@ async function uploadVideo(file: VideoUpload) {
         let data = new FormData();
         data.append("file", file.video)
         request = new XMLHttpRequest();
-        request.upload.addEventListener("progress", update_progress, false);
+        request.upload.addEventListener("progress", updateProgress, false);
         request.addEventListener("abort", function () {
             delIndex.value++;
             resolve({ success: false, error: "Upload aborted!" });
