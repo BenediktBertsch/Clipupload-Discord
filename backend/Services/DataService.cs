@@ -62,8 +62,8 @@ namespace Backend.Services
                         new KeyValuePair<string, string>("client_secret",  _discordSettings.SecretBot),
                         new KeyValuePair<string, string>("grant_type", "authorization_code"),
                         new KeyValuePair<string, string>("code", code),
-                        new KeyValuePair<string, string>( "redirect_uri", redirecturi),
-                        new KeyValuePair<string, string>( "scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
+                        new KeyValuePair<string, string>("redirect_uri", redirecturi),
+                        new KeyValuePair<string, string>("scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
                     };
                 }
                 else
@@ -75,7 +75,7 @@ namespace Backend.Services
                         new KeyValuePair<string, string>("grant_type", "authorization_code"),
                         new KeyValuePair<string, string>("code", code),
                         new KeyValuePair<string, string>("redirect_uri", url),
-                        new KeyValuePair<string, string>( "scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
+                        new KeyValuePair<string, string>("scope", Uri.EscapeDataString(_discordSettings.ScopeBot))
                     };
                 }
             }

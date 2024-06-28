@@ -1,8 +1,14 @@
 <template>
-  <div v-if="loginStatus" style="padding-top: 75px;" v-on:dragover.prevent v-on:dragenter.prevent="onDragEnter"
-    v-on:dragleave.prevent="onDragLeave" v-on:drop="getFiles" id="dropzone">
-    <!-- <input id="file" type="file" accept="video/mp4" @change="getFiles" multiple hidden /> -->
-    <VideoList v-model:snackbar-inform-user="snackbarInformUser"
+  <div v-if="loginStatus" style="padding-top: 75px; min-width: 100%; min-height: 100%;" v-on:dragover.prevent
+    v-on:dragenter.prevent="onDragEnter" v-on:dragleave.prevent="onDragLeave" v-on:drop="getFiles" id="dropzone">
+    <v-container v-if="videosLoading || noVideos" fill-height>
+      <v-row class="center">
+        <v-progress-circular v-if="videosLoading === true" indeterminate model-value="20" :size="128"
+          :width="6"></v-progress-circular>
+        <v-icon v-if="noVideos" size="250">mdi-cloud-upload</v-icon>
+      </v-row>
+    </v-container>
+    <VideoList v-model:videos-loading="videosLoading" v-model:snackbar-inform-user="snackbarInformUser"
       v-model:snackbar-inform-user-text="snackbarInformUserText" v-model:videos="videos" />
     <Suspense>
       <VideoUploadClient @add-video="addVideo" v-if="uploadVideos.length > 0" v-model:upload-videos="uploadVideos" />
@@ -20,12 +26,21 @@ const loginStatus = defineModel<boolean>("loginStatus", { required: true });
 const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required: true });
 const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const videos = ref([] as Video[]);
-
+const noVideos = ref(false);
+let videosLoading = ref(false);
 let dragCounter = 0;
 let uploadVideos = ref([] as VideoUpload[]);
 
+
 watch(uploadVideos, (newUploadVideos: VideoUpload[]) => {
   uploadVideos.value = newUploadVideos;
+})
+
+watch(videosLoading, (newVideosLoading: boolean) => {
+  videosLoading.value = newVideosLoading;
+  if (videosLoading.value === false && videos.value.length == 0) {
+    noVideos.value = true;
+  }
 })
 
 function onDragEnter() {
@@ -99,5 +114,13 @@ function addVideo(video: Video) {
 <style lang="scss" scoped>
 .dropzone {
   background-color: #94949457;
+}
+
+.center {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 </style>

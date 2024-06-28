@@ -22,6 +22,7 @@ import { VideoHandling } from './VideoHandling';
 import type { Video } from '~/utils/schemas';
 const config = useRuntimeConfig();
 const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required: true });
+const videosLoading = defineModel<boolean>("videosLoading", { required: true });
 const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const videos = defineModel<Video[]>("videos", { required: true });
 const userId = ref("");
@@ -31,6 +32,7 @@ let videoOffset = 0;
 
 onBeforeMount(async () => {
     // Weird workaround... before a request is executed correctly.
+    videosLoading.value = true;
     await nextTick()
     await getVideos();
     endlessScroll();
@@ -63,6 +65,7 @@ function endlessScroll() {
 async function getVideos() {
     var videorequest = await VideoHandling.fetchVideos(config.public.apiUrl, videoCount, videoOffset);
     if (videorequest.success) {
+        videosLoading.value = false;
         videorequest.videos.forEach((video) => {
             videos.value.push(video);
         });
