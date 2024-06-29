@@ -110,7 +110,6 @@ namespace Backend.Controllers
                     error = "User not found."
                 });
             }
-            
         }
 
         // Get Post User

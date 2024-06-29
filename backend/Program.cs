@@ -36,6 +36,7 @@ builder.Services.AddDbContextFactory<VideosContext>(options => {
 
 builder.Services.AddScoped(p => p.GetRequiredService<IDbContextFactory<VideosContext>>().CreateDbContext());
 
+builder.Services.AddHostedService<ConsistencyCheckService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
