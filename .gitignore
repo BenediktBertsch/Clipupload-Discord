@@ -2,3 +2,14 @@
 node_modules/
 .env
 /backend/driveapi.p12
+/Backend-New/clips
+/Frontend-Test/public
+/Backend-New/bin/Debug/net8.0
+/Backend-New/.vs
+/.vs/Clipupload-Discord
+/Backend-New/appsettings.json
+/backend/clips
+/frontend/.nuxt
+/backend/.vs/backend
+/backend/bin/Debug/net8.0
+/backend/obj/Debug/net8.0
