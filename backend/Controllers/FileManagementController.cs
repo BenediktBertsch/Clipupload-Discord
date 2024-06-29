@@ -28,15 +28,15 @@ namespace Backend.Controllers
         [Route("/upload")]
         public async Task<IActionResult> UploadVideo(IFormFile file)
         {
-            var userId = HttpContext.Items["userid"];
-            if (userId == null)
+            var strUserId = (string)HttpContext.Items["userid"];
+            if (strUserId == null)
             {
                 return BadRequest(new
                 {
-                    success = false,
                     error = "User not found in HttpContext."
                 });
             }
+            var userId = UInt64.Parse(strUserId);
 
             if (file != null && file.ContentType == "video/mp4" && file.Name != "")
             {
@@ -50,7 +50,10 @@ namespace Backend.Controllers
                 string id = Utils.GenerateId(_videos);
                 string videoPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".mp4");
                 string thumbnailPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".avif");
-                
+
+                var folderPath = videoPath.Remove(videoPath.Length - (id + ".mp4").Length, (id + ".mp4").Length);
+                Directory.CreateDirectory(folderPath);
+
                 var createFileSuccess = Utils.CreateFile(file.OpenReadStream(), videoPath);
                 if (!createFileSuccess)
                 {
@@ -94,15 +97,16 @@ namespace Backend.Controllers
         [Route("/video/{id}")]
         public async Task<IActionResult> VideoDelete(string id)
         {
-            var userId = HttpContext.Items["userid"];
-            if (userId == null)
+            var strUserId = (string)HttpContext.Items["userid"];
+            if (strUserId == null)
             {
                 return BadRequest(new
                 {
                     error = "User not found in HttpContext."
                 });
             }
-            var video = await _videos.VideoIds.FirstOrDefaultAsync(v => v.Id == id && (ulong)userId == v.User);
+            var userId = UInt64.Parse(strUserId);
+            var video = await _videos.VideoIds.FirstOrDefaultAsync(v => v.Id == id && userId == v.User);
             if (video == null)
             {
                 return BadRequest(new { error = "Video with this id not found." });

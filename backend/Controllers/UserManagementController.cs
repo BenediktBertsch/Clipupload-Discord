@@ -137,22 +137,24 @@ namespace Backend.Controllers
         [Route("/videos")]
         public IActionResult Videos([FromQuery]int? count, [FromQuery]int? offset)
         {
-            var userId = HttpContext.Items["userid"];
-            if (userId == null)
+            var strUserId = (string)HttpContext.Items["userid"];
+            if (strUserId == null)
             {
                 return BadRequest(new
                 {
                     error = "User not found in HttpContext."
                 });
             }
+            var userId = UInt64.Parse(strUserId);
             var allVideos = _videos.VideoIds.AsQueryable().Where(v => v.User == (ulong)userId).OrderByDescending(v => v.Date).ToList();
+
             if (count != null && offset != null)
             {
                 return Ok(new
                 {
                     success = true,
                     videos = allVideos.Skip((int)offset).Take((int)count),
-                    userId = allVideos[0].User.ToString(),
+                    userId = strUserId,
                     videoCount = count,
                     max = allVideos.Count
                 });
@@ -162,7 +164,7 @@ namespace Backend.Controllers
                 {
                     success = true,
                     videos = allVideos,
-                    userId = allVideos[0].User.ToString(),
+                    userId = strUserId,
                 });
             }
         }

@@ -68,8 +68,8 @@ namespace Backend.Middleware
                     return;
                 }
                 
-                context.Items["userid"] = restClient.CurrentUser.Id;
-                await Console.Out.WriteLineAsync(restClient.CurrentUser.Id.ToString());
+                context.Items["userid"] = restClient.CurrentUser.Id.ToString();
+
                 if (await _discordService.CheckUserInGuild(restClient.CurrentUser.Id))
                 {
                     if(!_videos.User.AsQueryable().Any(u => u.Id == restClient.CurrentUser.Id))
@@ -77,12 +77,10 @@ namespace Backend.Middleware
                         _videos.User.Add(new User() { Id = restClient.CurrentUser.Id, Post = true });
                         await _videos.SaveChangesAsync();
                     }
-                    await restClient.DisposeAsync();
                     await next.Invoke(context);
                 }
                 else
                 {
-                    await restClient.DisposeAsync();
                     await BadValidation(context);
                     return;
                 }

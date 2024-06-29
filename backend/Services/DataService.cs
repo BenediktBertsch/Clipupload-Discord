@@ -25,8 +25,8 @@ namespace Backend.Services
                 Content = new FormUrlEncodedContent(GenerateParameters(code, redirecturi, false))
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
-            var response = await _client.SendAsync(req).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = await _client.SendAsync(req).ConfigureAwait(false);
+            string content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Token>(content);
         }
 
@@ -38,7 +38,7 @@ namespace Backend.Services
             };
             _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/x-www-form-urlencoded"));
             var response = await _client.SendAsync(req).ConfigureAwait(false);
-            var content = await response.Content.ReadAsStringAsync();
+            string content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Token>(content);
         }
 
@@ -68,7 +68,7 @@ namespace Backend.Services
                 }
                 else
                 {
-                    var url = _appSettings.Frontend.Last() == '/' ? _appSettings.Frontend : _appSettings.Frontend + '/';
+                    string url = _appSettings.Frontend.Last() == '/' ? _appSettings.Frontend : _appSettings.Frontend + '/';
                     return new List<KeyValuePair<string, string>> {
                         new KeyValuePair<string, string>("client_id", _discordSettings.IdBot),
                         new KeyValuePair<string, string>("client_secret",  _discordSettings.SecretBot),
