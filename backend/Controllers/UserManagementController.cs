@@ -15,7 +15,6 @@ namespace Backend.Controllers
             _videos = videos;
         }
 
-        // Using Discords API to authenticate User
         [HttpPost]
         [Route("/login")]
         public async Task<IActionResult> LoginAsync([FromQuery]string code, string? redirecturi)
@@ -47,7 +46,6 @@ namespace Backend.Controllers
             }
         }
 
-        // Refresh authentication token if expired
         [HttpPost]
         [Route("/refresh")]
         public async Task<IActionResult> Refresh([FromQuery] string refresh_token, [FromQuery]string? redirecturi)
@@ -81,7 +79,6 @@ namespace Backend.Controllers
             }
         }
 
-        // Set if you want to post your uploaded clips or not
         [HttpPatch]
         [Route("/post")]
         public async Task<IActionResult> PatchPost([FromQuery]bool post)
@@ -112,7 +109,6 @@ namespace Backend.Controllers
             }
         }
 
-        // Get Post User
         [HttpGet]
         [Route("/post")]
         public IActionResult GetPost()
@@ -131,7 +127,6 @@ namespace Backend.Controllers
             });
         }
 
-        // Get your own videos
         [HttpGet]
         [Route("/videos")]
         public IActionResult Videos([FromQuery]int? count, [FromQuery]int? offset)
