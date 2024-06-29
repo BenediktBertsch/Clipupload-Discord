@@ -1,6 +1,7 @@
 <template>
-    <VideoPlayer v-if="!videoLoading && !videoNotFound"
-        style="height: 75%;" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
+    <div v-if="!videoLoading && !videoNotFound" style=" height: 75%;">
+        <VideoPlayer :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
+    </div>
     <div v-else-if="!videoLoading && videoNotFound">
         Video not found.
     </div>
