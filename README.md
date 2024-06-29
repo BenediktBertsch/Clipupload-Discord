@@ -114,7 +114,6 @@ server {
 
         location /files/ {
                 root /mnt/clips/;
-                autoindex on;
         }
 
         location /api {
