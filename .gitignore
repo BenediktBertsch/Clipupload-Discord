@@ -11,5 +11,15 @@ node_modules/
 /backend/clips
 /frontend/.nuxt
 /backend/.vs/backend
-/backend/bin/Debug/net8.0
-/backend/obj/Debug/net8.0
+/backend/bin
+/backend/obj
+backend/obj/backend.csproj.nuget.dgspec.json
+backend/obj/Backend.csproj.nuget.g.props
+backend/obj/Backend.csproj.nuget.g.targets
+backend/obj/project.assets.json
+backend/obj/project.nuget.cache
+backend/obj/Debug/net8.0/Backend.AssemblyInfo.cs
+backend/obj/Debug/net8.0/Backend.AssemblyInfoInputs.cache
+backend/obj/Debug/net8.0/Backend.assets.cache
+backend/obj/Debug/net8.0/Backend.csproj.AssemblyReference.cache
+backend/obj/Debug/net8.0/Backend.GeneratedMSBuildEditorConfig.editorconfig
