@@ -1,5 +1,5 @@
 <template>
-  <div v-if="loginStatus" style="padding-top: 75px; min-width: 100%; min-height: 100%;" v-on:dragover.prevent
+  <div v-if="loginStatus" style="min-width: 100%; min-height: 100%;" v-on:dragover.prevent
     v-on:dragenter.prevent="onDragEnter" v-on:dragleave.prevent="onDragLeave" v-on:drop="getFiles" id="dropzone">
     <v-container v-if="videosLoading || noVideos" fill-height>
       <v-row class="center">
@@ -14,7 +14,7 @@
       <VideoUploadClient @add-video="addVideo" v-if="uploadVideos.length > 0" v-model:upload-videos="uploadVideos" />
     </Suspense>
   </div>
-  <h1 v-else>Not logged in.</h1>
+  <h1 class="center" v-else>Not logged in.</h1>
 </template>
 
 <script lang="ts" setup>

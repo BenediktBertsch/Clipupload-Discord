@@ -111,8 +111,8 @@ namespace Backend.Controllers
             {
                 return BadRequest(new { error = "Video with this id not found." });
             }
-            string videoPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".mp4");
-            string thumbnailPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + id + ".avif");
+            string videoPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + video.Id + ".mp4");
+            string thumbnailPath = Path.GetFullPath(_filesSettings.Path + Path.DirectorySeparatorChar + userId.ToString() + Path.DirectorySeparatorChar + video.Id + ".avif");
             System.IO.File.Delete(videoPath);
             System.IO.File.Delete(thumbnailPath);
 

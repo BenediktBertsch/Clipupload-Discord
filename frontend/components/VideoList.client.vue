@@ -28,7 +28,7 @@ const videosLoading = defineModel<boolean>("videosLoading", { required: true });
 const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const videos = defineModel<Video[]>("videos", { required: true });
 const userId = ref("");
-let videoCount = 24;
+let videoCount = 36;
 let videoMax = 0;
 let videoOffset = 0;
 

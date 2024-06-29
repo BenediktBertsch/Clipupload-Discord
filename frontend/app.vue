@@ -2,7 +2,7 @@
   <v-app>
     <AppBar v-model:snackbar-inform-user="snackbarInformUser" v-model:snackbar-inform-user-text="snackbarInformUserText"
       v-model:login-status="loginStatus" />
-    <NuxtPage v-model:login-status="loginStatus"
+    <NuxtPage style="padding-top: 75px;" v-model:login-status="loginStatus"
       v-model:snackbar-inform-user="snackbarInformUser"
       v-model:snackbar-inform-user-text="snackbarInformUserText" />
     <v-snackbar :timeout="2000" rounded="pill" v-model="snackbarInformUser">
