@@ -41,7 +41,7 @@ onBeforeMount(async () => {
 function setResolution(resolutionDivision: number) {
     // 16:9
     if(resolutionDivision < 0.75) {
-        width.value = '1565px';
+        width.value = '1550px';
         ratio.value = '16/9';
     }
     // 21:9
