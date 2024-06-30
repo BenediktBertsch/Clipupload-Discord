@@ -17,7 +17,8 @@ const config = useRuntimeConfig();
 const route = useRoute();
 const urls = ref();
 const videoNotFound = ref(false);
-const width = ref('1540px')
+//default 4:3
+const width = ref('1165px')
 const ratio = ref('4/3')
 
 onBeforeMount(async () => {
@@ -40,12 +41,12 @@ onBeforeMount(async () => {
 function setResolution(resolutionDivision: number) {
     // 16:9
     if(resolutionDivision < 0.75) {
-        width.value = '1900px';
+        width.value = '1565px';
         ratio.value = '16/9';
     }
     // 21:9
     if(resolutionDivision < 0.42) {
-        width.value = '2960px';
+        width.value = '2880px';
         ratio.value = '21/9';
     }
 }
