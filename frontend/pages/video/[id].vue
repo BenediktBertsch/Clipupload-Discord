@@ -1,6 +1,6 @@
 <template>
     <div :style="{'max-width': width, 'width': '100%', 'margin': 'auto'}" v-if="!videoLoading && !videoNotFound">
-        <VideoPlayer :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
+        <VideoPlayer :aspect_ratio="ratio" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
     </div>
     <div style="margin: auto" v-else-if="!videoLoading && videoNotFound">
         Video not found.
@@ -18,6 +18,7 @@ const route = useRoute();
 const urls = ref();
 const videoNotFound = ref(false);
 const width = ref('1540px')
+const ratio = ref('4/3')
 
 onBeforeMount(async () => {
     // Weird workaround... before a request is executed correctly.
@@ -29,7 +30,6 @@ onBeforeMount(async () => {
         urls.value = getUrls(config.public.baseUrl, metadata.user, param_id);
         const resolutionDivision = await getVideoDimensionsOf(urls.value.video_url);
         setResolution(resolutionDivision);
-        console.log(width.value)
         setSEOMeta(metadata.title, metadata.username, urls.value.video_url, urls.value.thumb_url);
     }
     else {
@@ -41,10 +41,12 @@ function setResolution(resolutionDivision: number) {
     // 16:9
     if(resolutionDivision < 0.75) {
         width.value = '1900px';
+        ratio.value = '16/9';
     }
     // 21:9
     if(resolutionDivision < 0.42) {
         width.value = '2960px';
+        ratio.value = '21/9';
     }
 }
 
