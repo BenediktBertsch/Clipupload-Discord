@@ -48,6 +48,14 @@ onBeforeMount(async () => {
     }
 
     // If user has token, validate creds
+    await validateLogin();
+})
+
+onMounted(() => {
+    setThemeLocalstorage();
+})
+
+async function validateLogin() {
     var refresh = await UserHandling.validateLogin();
     if (refresh && refresh.refreshToken !== null && !refresh.refreshToken) {
         var result = await UserHandling.refreshToken(config.public.apiUrl);
@@ -60,11 +68,7 @@ onBeforeMount(async () => {
             snackbarInformUser.value = true;
         }
     }
-})
-
-onMounted(() => {
-    setThemeLocalstorage();
-})
+}
 
 function setThemeLocalstorage() {
     if (

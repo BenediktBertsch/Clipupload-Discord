@@ -1,5 +1,5 @@
 <template>
-    <media-player :style="{'aspect-ratio': aspect_ratio}" class="player" :src="$src" crossOrigin playsInline ref="$player">
+    <media-player id="aspectRatio" :src="$src" crossOrigin playsInline ref="$player">
         <media-provider>
             <media-poster class="vds-poster" :src="thumb_url" />
         </media-provider>
@@ -28,6 +28,12 @@ const $player = ref<MediaPlayerElement>(),
     $src = ref('');
 onMounted(() => {
     $src.value = video_url;
-})
 
+})
 </script>
+
+<style>
+  #aspectRatio {
+      aspect-ratio: v-bind('aspect_ratio')
+  }
+</style>

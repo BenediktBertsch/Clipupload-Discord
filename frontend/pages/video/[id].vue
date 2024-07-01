@@ -1,17 +1,19 @@
 <template>
-    <div :style="{ 'max-width': width, 'width': '100%', 'margin': 'auto' }" v-if="!videoNotFound">
+    <div id="videoDiv" v-if="!videoNotFound">
         <VideoPlayer :aspect_ratio="ratio" :video_url="urls.video_url" :thumb_url="urls.thumb_url" />
         <div class="video-information">
             <div class="video-title">
                 <h3>{{ metadata.title }}</h3>
             </div>
-            <v-tooltip :text="date" location="start">
-                <template v-slot:activator="{ props }">
-                    <div v-bind="props" class="video-description">
-                        Uploaded by {{ metadata.username }} on {{ dateMain }}
-                    </div>
-                </template>
-            </v-tooltip>
+            <v-no-ssr>
+                <v-tooltip :text="date" location="start">
+                    <template v-slot:activator="{ props }">
+                        <div v-bind="props" class="video-description">
+                            Uploaded by {{ metadata.username }} {{ dateMain }}
+                        </div>
+                    </template>
+                </v-tooltip>
+            </v-no-ssr>
         </div>
     </div>
     <div style="margin: auto" v-else-if="videoNotFound">
@@ -77,27 +79,45 @@ function getVideoDimensionsOf(url: string): Promise<number> {
     });
 }
 
-function setDateStrings(metadate: Date){
+function setDateStrings(metadate: Date) {
     date.value = metadate.toLocaleDateString();
     let diffDate = new Date(Math.abs(Date.now() - metadata.date.getTime()));
-    let setDate = false;
     let dateStringBuilder = "today";
-    let yearsAgo = diffDate.getUTCFullYear() - 1970;
-    let monthsAgo = diffDate.getUTCMonth();
-    let daysAgo = diffDate.getUTCDay();
-    if (daysAgo > 0) {
+
+    let oneDayInMilliseconds = 24 * 60 * 60 * 1000;
+    let oneWeekInMilliseconds = oneDayInMilliseconds * 7;
+    let oneMonthInMilliseconds = oneWeekInMilliseconds * 4;
+
+    let yearsAgo = Math.floor(diffDate.getUTCFullYear() - 1970);
+    let monthsAgo = Math.floor(diffDate.getTime() / oneMonthInMilliseconds);
+    let weeksAgo = Math.floor(diffDate.getTime() / oneWeekInMilliseconds);
+    let daysAgo = Math.floor(diffDate.getTime() / oneDayInMilliseconds);
+
+    if (daysAgo >= 1) {
+        dateStringBuilder = daysAgo.toString() + " day";
+    }
+    if (daysAgo >= 2) {
         dateStringBuilder = daysAgo.toString() + " days";
-        setDate = true;
     }
-    if (monthsAgo > 0) {
+    if (weeksAgo >= 1) {
+        dateStringBuilder = weeksAgo.toString() + " week";
+    }
+    if (weeksAgo >= 2) {
+        dateStringBuilder = weeksAgo.toString() + " weeks";
+    }
+    if (monthsAgo >= 1) {
+        dateStringBuilder = monthsAgo.toString() + " month";
+    }
+    if (monthsAgo >= 2) {
         dateStringBuilder = monthsAgo.toString() + " months";
-        setDate = true;
     }
-    if (yearsAgo > 0) {
+    if (yearsAgo >= 1) {
+        dateStringBuilder = yearsAgo.toString() + " year";
+    }
+    if (yearsAgo >= 2) {
         dateStringBuilder = yearsAgo.toString() + " years";
-        setDate = true;
     }
-    if (setDate)
+    if (dateStringBuilder != "today")
         dateMain.value = dateStringBuilder + " ago"
     else
         dateMain.value = "today"
@@ -132,11 +152,14 @@ if (metadata.title != undefined && metadata.username != undefined && metadata.us
     setSEOMeta(metadata.title, metadata.username, urls.value.video_url, urls.value.thumb_url);
 }
 
-if (import.meta.client && metadata.date != undefined) {
-    const resolutionDivision = await getVideoDimensionsOf(urls.value.video_url);
-    setResolution(resolutionDivision);
-    setDateStrings(metadata.date);
-}
+onBeforeMount(async () => {
+    if (import.meta.client && metadata.date != undefined) {
+        const resolutionDivision = await getVideoDimensionsOf(urls.value.video_url);
+        setResolution(resolutionDivision);
+        setDateStrings(metadata.date);
+    }
+})
+
 
 </script>
 
@@ -148,5 +171,11 @@ if (import.meta.client && metadata.date != undefined) {
 
 .video-description {
     font-size: .9em;
+}
+
+#videoDiv {
+    max-width: v-bind('width');
+    width: 100%;
+    margin: auto;
 }
 </style>
