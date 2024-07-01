@@ -6,9 +6,13 @@
         </v-tooltip>
         <v-img @click="openVideoDialog()" style="width: 100%; height: auto"
             :src="`${config.public.baseUrl}/files/${userId}/${video.id}.avif`" />
-        <v-btn @click="copyVideoURL(video.id)" color="success" tile style="width: 100%">
-            Share
-        </v-btn>
+        <v-tooltip text="Copies url to your clipboard">
+            <template v-slot:activator="{ props }">
+                <v-btn v-bind="props" @click="copyVideoURL(video.id)" color="success" tile style="width: 100%">
+                    Share
+                </v-btn>
+            </template>
+        </v-tooltip>
         <v-divider></v-divider>
         <v-btn @click="openDeleteVideoDialog()" color="error" tile style="width: 100%">
             Delete
@@ -16,7 +20,8 @@
         <v-dialog style="max-width: 50%;" v-model="dialog">
             <v-card>
                 <v-card-title> {{ video.name }} </v-card-title>
-                <VideoPlayer :aspect_ratio="'16/9'" :video_url="`${config.public.baseUrl}/files/${userId}/${video.id}.mp4`"
+                <VideoPlayer :aspect_ratio="'16/9'"
+                    :video_url="`${config.public.baseUrl}/files/${userId}/${video.id}.mp4`"
                     :thumb_url="`${config.public.baseUrl}/files/${userId}/${video.id}.avif`" />
                 <v-card-actions>
                     <v-spacer></v-spacer>

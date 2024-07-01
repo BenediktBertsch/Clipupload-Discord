@@ -3,6 +3,7 @@ export interface SEOMetadata {
   video: Video;
   username: string;
   userId: string,
+  date: Date,
 }
 
 export interface LoginRequest {
