@@ -81,7 +81,7 @@ function getVideoDimensionsOf(url: string): Promise<number> {
 
 function setDateStrings(metadate: Date) {
     date.value = metadate.toLocaleDateString();
-    let diffDate = new Date(Math.abs(Date.now() - metadata.date.getTime()));
+    let diffDate = new Date(Math.abs(Date.now() - metadate.getTime()));
     let dateStringBuilder = "today";
 
     let oneDayInMilliseconds = 24 * 60 * 60 * 1000;
@@ -89,12 +89,13 @@ function setDateStrings(metadate: Date) {
     let oneMonthInMilliseconds = oneWeekInMilliseconds * 4;
 
     let yearsAgo = Math.floor(diffDate.getUTCFullYear() - 1970);
-    let monthsAgo = Math.floor(diffDate.getTime() / oneMonthInMilliseconds);
-    let weeksAgo = Math.floor(diffDate.getTime() / oneWeekInMilliseconds);
-    let daysAgo = Math.floor(diffDate.getTime() / oneDayInMilliseconds);
+    let monthsAgo = Math.round(diffDate.getTime() / oneMonthInMilliseconds);
+    let weeksAgo = Math.round(diffDate.getTime() / oneWeekInMilliseconds);
+    let daysAgo = Math.round(diffDate.getTime() / oneDayInMilliseconds);
 
-    if (daysAgo >= 1) {
-        dateStringBuilder = daysAgo.toString() + " day";
+
+    if (new Date().getDate() - metadate.getDate() != 0) {
+        dateStringBuilder = "yesterday";
     }
     if (daysAgo >= 2) {
         dateStringBuilder = daysAgo.toString() + " days";
@@ -116,6 +117,10 @@ function setDateStrings(metadate: Date) {
     }
     if (yearsAgo >= 2) {
         dateStringBuilder = yearsAgo.toString() + " years";
+    }
+    if (dateStringBuilder == "yesterday") {
+        dateMain.value = "yesterday";
+        return
     }
     if (dateStringBuilder != "today")
         dateMain.value = dateStringBuilder + " ago"
@@ -159,8 +164,6 @@ onBeforeMount(async () => {
         setDateStrings(metadata.date);
     }
 })
-
-
 </script>
 
 <style lang="scss" scoped>

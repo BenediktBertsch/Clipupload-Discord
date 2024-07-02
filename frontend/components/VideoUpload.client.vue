@@ -55,11 +55,15 @@
 
 <script lang="ts" setup>
 import type { Video, VideoUpload, VideoUploadResultFailed, VideoUploadResultSuccess } from '~/utils/schemas';
-
+import { UserHandling } from './UserHandling';
+const loginStatus = defineModel<boolean>("loginStatus", { required: true });
+const snackbarInformUser = defineModel<boolean>("snackbarInformUser", { required: true });
+const snackbarInformUserText = defineModel<string>("snackbarInformUserText", { required: true });
 const uploadVideos = defineModel<VideoUpload[]>("uploadVideos", { required: true });
 const config = useRuntimeConfig();
 const emit = defineEmits<{
     (e: 'addVideo', video: Video): void
+    (e: 'validateLogin'): boolean,
 }>()
 const snackBarUpload = ref(true);
 const show = ref(true);
@@ -67,9 +71,25 @@ const uploadingIndex = ref(0), delIndex = ref(0);
 var request = new XMLHttpRequest();
 
 onMounted(async () => {
+    await validateLogin();
     snackBarUpload.value = true;
     await uploadingVideos(uploadVideos.value!);
 })
+
+async function validateLogin() {
+    var refresh = await UserHandling.validateLogin();
+    if (refresh && refresh.refreshToken !== null && !refresh.refreshToken) {
+        var result = await UserHandling.refreshToken(config.public.apiUrl);
+        loginStatus.value = result.loginStatus;
+        if (result.loginStatus) {
+            snackbarInformUserText.value = "User credentials refreshed successfully."
+            snackbarInformUser.value = true;
+        } else {
+            snackbarInformUserText.value = "User credentials refresh failed. Please login again."
+            snackbarInformUser.value = true;
+        }
+    }
+}
 
 onUnmounted(() => {
     uploadVideos.value = [];

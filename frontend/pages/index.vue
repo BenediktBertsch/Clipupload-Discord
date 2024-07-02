@@ -11,7 +11,9 @@
     <VideoList v-model:videos-loading="videosLoading" v-model:snackbar-inform-user="snackbarInformUser"
       v-model:snackbar-inform-user-text="snackbarInformUserText" v-model:videos="videos" />
     <Suspense>
-      <VideoUploadClient @add-video="addVideo" v-if="uploadVideos.length > 0" v-model:upload-videos="uploadVideos" />
+      <VideoUploadClient v-model:login-status="loginStatus" v-model:snackbar-inform-user="snackbarInformUser"
+        v-model:snackbar-inform-user-text="snackbarInformUserText" add-video="addVideo" v-if="uploadVideos.length > 0"
+        v-model:upload-videos="uploadVideos" />
     </Suspense>
   </div>
   <h1 class="center" v-else>Not logged in.</h1>
@@ -32,10 +34,10 @@ let dragCounter = 0;
 
 
 watch(videos, (newVideos: Video[]) => {
-  if(newVideos.length > 0){
+  if (newVideos.length > 0) {
     noVideos.value = false;
   }
-  if (newVideos.length == 0){
+  if (newVideos.length == 0) {
     noVideos.value = true;
   }
 }, { deep: true })
